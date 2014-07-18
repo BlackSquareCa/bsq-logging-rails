@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name        = 'bsq-logging-rails'
   s.version     = BlackSquareLoggingRails::VERSION
   s.authors     = ['William Richards']
-  s.email       = ['techops@blacksquare.ca']
+  s.email       = ['william@blacksquare.ca']
   s.homepage    = 'https://github.com/BlackSquareCa/bsq-logging-rails'
   s.summary     = %q{Implements BlackSquare's patterns and practices for logging from Rails applications}
   s.description = %q{Implements BlackSquare's patterns and practices for logging from Rails applications}
