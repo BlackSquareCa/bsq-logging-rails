@@ -29,6 +29,7 @@ module BlackSquareLoggingRails
       payload_params << :host
       payload_params << :remote_ip
       payload_params << :request_id
+      payload_params << :session_id
       payload_params << :request_params
 
       app.config.lograge.custom_options = -> (event) do

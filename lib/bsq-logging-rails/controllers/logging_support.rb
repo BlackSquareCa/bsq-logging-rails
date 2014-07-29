@@ -42,17 +42,21 @@ module BlackSquareLoggingRails
         {
             host: BlackSquareLoggingRails.format_value(request_host_name),
             remote_ip: BlackSquareLoggingRails.format_value(remote_ip_address),
-            request_id: BlackSquareLoggingRails.format_value(request_id)
+            request_id: BlackSquareLoggingRails.format_value(request_id),
+            session_id: BlackSquareLoggingRails.format_value(session_id)
         }
       end
 
-      # Returns the request identifier
       def request_id
         request.uuid
       end
 
       def request_host_name
         request.host
+      end
+
+      def session_id
+        session.session_id
       end
 
       def remote_ip_address
