@@ -6,6 +6,8 @@ module BlackSquareLoggingRails
   # The default way to set up this logging infrastructure is via an initializer.
   def self.setup
     yield self
+    # Clear the existing global context so it's re-memoized on the next use
+    @global_logging_context_data = nil
   end
 
   # True if we should log request parameters, false otherwise
@@ -37,13 +39,17 @@ module BlackSquareLoggingRails
   @@business_event_prefix = 'bsq.'
 
   def self.global_logging_context_data
+    @global_logging_context_data ||= gather_global_logging_context_data
+  end
+
+  def self.gather_global_logging_context_data
     {
         log_ver: format_value(BlackSquareLoggingRails.logging_schema_version),
         app: format_value(BlackSquareLoggingRails.application_name),
         app_ver: format_value(BlackSquareLoggingRails.application_version),
         source: format_value(BlackSquareLoggingRails.log_source),
         deploy: format_value(formatted_environment)
-    }
+    }.delete_if { |key, value| value.nil? }
   end
 
   def self.format_value(message)
