@@ -37,16 +37,18 @@ module BlackSquareLoggingRails
   @@business_event_prefix = 'bsq.'
 
   def self.global_logging_context_data
-    {
-        log_ver: BlackSquareLoggingRails.logging_schema_version,
-        app: BlackSquareLoggingRails.application_name,
-        app_ver: BlackSquareLoggingRails.application_version,
-        source: BlackSquareLoggingRails.log_source,
-        deploy: formatted_environment
-    }
+    @global_logging_context_data ||= {
+        log_ver: format_value(BlackSquareLoggingRails.logging_schema_version),
+        app: format_value(BlackSquareLoggingRails.application_name),
+        app_ver: format_value(BlackSquareLoggingRails.application_version),
+        source: format_value(BlackSquareLoggingRails.log_source),
+        deploy: format_value(formatted_environment)
+    }.delete_if { |key, value| value.nil? }
   end
 
   def self.format_value(message)
+    return if message.nil?
+
     case message
       when Float
         '%.2f' % message

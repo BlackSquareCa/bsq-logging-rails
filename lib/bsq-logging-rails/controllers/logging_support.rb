@@ -44,7 +44,7 @@ module BlackSquareLoggingRails
             remote_ip: BlackSquareLoggingRails.format_value(remote_ip_address),
             request_id: BlackSquareLoggingRails.format_value(request_id),
             session_id: BlackSquareLoggingRails.format_value(session_id)
-        }
+        }.delete_if { |key, value| value.nil? }
       end
 
       def request_id
@@ -56,11 +56,13 @@ module BlackSquareLoggingRails
       end
 
       def session_id
-        session.session_id
+        request.session_options[:id]
       end
 
       def remote_ip_address
         if env
+          # Using the X-Forwarded-For HTTP header enables reporting of remote IP's
+          # with an AWS Elastic Load Balancer
           env['HTTP_X_FORWARDED_FOR'] || request.remote_ip
         else
           request.remote_ip
