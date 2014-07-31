@@ -13,8 +13,8 @@ module BlackSquareLoggingRails
     config.after_initialize do
       ::Scrolls.init(
           global_context: BlackSquareLoggingRails.global_logging_context_data,
-          exceptions: 'single',
-          time_unit: 'ms'
+          time_unit: 'ms',
+          timestamp: true
       )
     end
 
