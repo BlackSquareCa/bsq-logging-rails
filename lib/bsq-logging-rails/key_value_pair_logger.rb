@@ -1,7 +1,7 @@
 module BlackSquareLoggingRails
   class KeyValuePairLogger
     def call(severity, time, progname, message)
-      message.strip!
+      message.to_s.strip!
       return nil if message.blank?
 
       line_prefix = "now=#{BlackSquareLoggingRails.format_value(Time.now.utc)} "
